@@ -9,7 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 
 //As long as @Configuration or @EnableWebSecurity is used no overriding or autowiring needed
-// Method arguments must be same and names can be anything
+//Method arguments must be same and names can be anything
 
 @EnableWebSecurity
 @Configuration
@@ -31,9 +31,9 @@ class Sb1SecurityConfig extends WebSecurityConfigurerAdapter{
 			.loginPage("/login").usernameParameter("username").passwordParameter("password")
 			.loginProcessingUrl("/doLogin")
 			.defaultSuccessUrl("/index",true)
-			.failureUrl("/loginFailed").permitAll();
-//			.and()
-//			.exceptionHandling().accessDeniedPage("/accessDenied");
+			.failureUrl("/loginFailed").permitAll()
+			.and()
+			.exceptionHandling().accessDeniedPage("/accessDenied");
 	}
 	
 	//@Autowired
@@ -44,9 +44,10 @@ class Sb1SecurityConfig extends WebSecurityConfigurerAdapter{
 			.withUser("Admin").password("{noop}Admin@123").authorities("admin")
 			.and()
 			.withUser("All").password("{noop}All@123").roles("client");
-	
-//		.and()
-//		.passwordEncoder(NoOpPasswordEncoder.getInstance());
+		
+//  remove {noop} from the password to use following
+//			.and()
+//			.passwordEncoder(NoOpPasswordEncoder.getInstance());
 	}
 	
 }
