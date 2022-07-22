@@ -36,4 +36,5 @@ public class LoginController {
 	public String showAccessDenied() {
 		return ACCESSDENIED;
 	}
+	
 }

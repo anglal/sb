@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 //As long as @Configuration or @EnableWebSecurity is used no overriding or autowiring needed
 //Method arguments must be same and names can be anything
@@ -19,7 +20,6 @@ class Sb1SecurityConfig extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 			.antMatchers("/login*").permitAll()
-			//.antMatchers("/index","/").permitAll()
 			.antMatchers("/users").hasAnyRole("employee","client")
 			.antMatchers("/users/**").hasAuthority("admin")
 			.antMatchers("/**").hasAnyRole("employee", "client")
@@ -50,4 +50,9 @@ class Sb1SecurityConfig extends WebSecurityConfigurerAdapter{
 //			.passwordEncoder(NoOpPasswordEncoder.getInstance());
 	}
 	
+	
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/static/**").addResourceLocations("/classpath:/static/**");
+		
+	}
 }
